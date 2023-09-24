@@ -1,26 +1,81 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import classes from "./App.module.scss";
+// import "./App.scss";
+import { Route, Routes } from "react-router-dom";
+import MainPage from "./components/MainPage";
+import AlbumBig from "./components/AlbumBig";
+import Albums, { AlbumItem } from "./components/Albums";
+import React, { useState } from "react";
+import OrderPage from "./components/OrderPage";
+import AboutUs from "./components/AboutUs";
+import DeliveryAndPayment from "./components/DeliveryAndPayment";
+import Catalog from "./components/Catalog";
+import AAA from "./aa/aaa";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface AppProps {}
+
+interface AppState {
+  orders: any[];
+}
+
+export class App extends React.Component<AppProps, AppState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      orders: [],
+    };
+
+    this.addToOrder = this.addToOrder.bind(this);
+    this.deleteOrder = this.deleteOrder.bind(this);
+  }
+
+  render() {
+    return (
+      <div className={classes.container}>
+        <Header orders={this.state.orders} onDelete={this.deleteOrder} />
+
+        <Routes>
+          <Route path="*" element={<MainPage onAdd={this.addToOrder} />} />
+
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/deliveryAndPayment" element={<DeliveryAndPayment />} />
+
+          <Route
+            path="/orderPage"
+            element={<OrderPage orders={this.state.orders} />}
+          />
+
+          {Albums.map((el, index) => (
+            <Route
+              key={index}
+              path={el.path}
+              element={<AlbumBig onAdd={this.addToOrder} allObj={el} />}
+            />
+          ))}
+
+          <Route
+            path="/catalog"
+            element={<Catalog onAdd={this.addToOrder} />}
+          />
+        </Routes>
+        <Footer />
+      </div>
+    );
+  }
+
+  deleteOrder(id: number) {
+    this.setState({ orders: this.state.orders.filter((el) => el.id !== id) });
+  }
+
+  addToOrder(item: AlbumItem) {
+    let isInArray = false;
+    this.state.orders.forEach((el) => {
+      if (el.id === item.id) isInArray = true;
+    });
+
+    if (!isInArray) this.setState({ orders: [item, ...this.state.orders] });
+  }
 }
 
 export default App;

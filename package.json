@@ -10,9 +10,19 @@
     "@types/node": "^16.18.53",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
+    "@types/react-paginate": "^7.1.1",
+    "aos": "^2.3.4",
+    "bootstrap": "^5.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.6.0",
+    "react-paginate": "^8.2.0",
+    "react-phone-number-input": "^3.2.13",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-slider": "^2.0.6",
+    "sass": "^1.55.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -39,5 +49,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^8.19.0",
+    "@types/css-modules": "^1.0.3",
+    "@types/react-slider": "^1.3.1"
   }
 }

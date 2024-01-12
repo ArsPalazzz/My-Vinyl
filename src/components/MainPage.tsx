@@ -8,13 +8,17 @@ import addInfTwo from "./../images/other/vinylsmain2.webp";
 import { MdAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Albums, { AlbumItem } from "./Albums";
+import { useDispatch } from "react-redux";
+import {addToCard} from './../store/OrderSlice'
 
 const MainPage = (props: any) => {
   const [data, setdata] = useState<AlbumItem[]>(Albums); // хуки - функции которые помогают обрабатывать события в js
 
   const [value, setValue] = useState("");
+  const dispatch = useDispatch();
 
-  const filteredAlbums = data.slice(0, 12);
+
+  const twelveAlbums = data.slice(0, 12);
 
   let delay = 100;
 
@@ -47,7 +51,7 @@ const MainPage = (props: any) => {
       </div>
       <div className={classes.titleUpperAlbums}>The most recent records</div>
       <div className={classes.albums}>
-        {filteredAlbums.map((item) => (
+        {twelveAlbums.map((item) => (
           <div
             className={classes.block}
             key={item.id}
@@ -63,7 +67,7 @@ const MainPage = (props: any) => {
             </Link>
             <MdAddCircle
               className={classes.add}
-              onClick={() => props.onAdd(item)}
+              onClick={() =>dispatch(addToCard(item))}
             />
 
             <div className={classes.second}>

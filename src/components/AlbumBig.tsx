@@ -6,13 +6,17 @@ import "./../sassModules/None.css";
 import AlbumSmallAdd from "./AlbumSmallAdd";
 import { useLayoutEffect } from "react";
 import Albums, { AlbumItem } from "./Albums";
+import { useDispatch } from "react-redux";
+import {addToCard} from './../store/OrderSlice'
 
-interface AlbumBigProps {
-  onAdd: (item: AlbumItem) => void;
+
+interface AlbumBigProps
+ {
   allObj: AlbumItem;
 }
 
 function AlbumBig(props: AlbumBigProps) {
+  const dispatch = useDispatch();
   let aSideSongs = [];
   let bSideSongs = [];
   let genres = [props.allObj.genres.genre1],
@@ -73,7 +77,7 @@ function AlbumBig(props: AlbumBigProps) {
             <p className={classes.price}>{props.allObj.price}</p>
             <button
               className={classes.btn}
-              onClick={() => props.onAdd(props.allObj)}
+              onClick={() => dispatch(addToCard(props.allObj))}
             >
               Add to bag
             </button>

@@ -3,14 +3,21 @@ import classes from "./../sassModules/Order.module.scss";
 import { BiTrash } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { AlbumItem } from "./Albums";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./../store/index";
+import {addToCard, deleteFromCard} from './../store/OrderSlice'
 
 interface OrderProps {
-  onDelete: (id: number) => void;
+  // onDelete: (id: number) => void;
   key: number;
   item: AlbumItem;
 }
 
 const Order = (props: OrderProps) => {
+  const dispatch = useDispatch();
+ 
+
+
   return (
     <div className={classes.item}>
       <Link to="/orderPage" className={classes.linkStylesAbout}>
@@ -20,7 +27,7 @@ const Order = (props: OrderProps) => {
       </Link>
       <BiTrash
         className={classes.deleteIcon}
-        onClick={() => props.onDelete(props.item.id)}
+        onClick={() => dispatch(deleteFromCard(props.item.id))}
       />
     </div>
   );

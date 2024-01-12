@@ -13,6 +13,8 @@ import "react-phone-number-input/style.css";
 import scssStyle from "./../sassModules/PhoneInput.module.scss";
 import cssStyleh1 from "./../sassModules/OrderPageh3.module.css";
 import Albums from "./Albums";
+import { useSelector } from "react-redux";
+import { RootState } from "./../store/index";
 // import storeOnMap from "./../images/other/storeOnMap.png";
 
 const useValidation = (value: string, validations: Validations) => {
@@ -98,13 +100,15 @@ const useInput = (InitialValue: string, validations: Validations) => {
   };
 };
 
-interface OrderPageProps {
-  orders: AlbumItem[];
-}
+// interface OrderPageProps {
+//   orders: AlbumItem[];
+// }
 
-const OrderPage = (props: OrderPageProps) => {
+const OrderPage = () => {
   const [deliveryWasChoosen, setDeliveryWasChoosen] = useState(false);
   const [paymentWasChoosen, setPaymentWasChoosen] = useState(false);
+
+  const orders = useSelector((state : RootState) => state.orders.orders);
 
   // хуки для нажатия на кнопки
   const [openCurier, setOpenCurier] = useState(true);
@@ -173,7 +177,7 @@ const OrderPage = (props: OrderPageProps) => {
 
   let allAllCost = 0;
 
-  props.orders.map((e) => {
+  orders.map((e) => {
     allAllCost += parseFloat(e.price) * e.count;
   });
 
@@ -585,11 +589,11 @@ const OrderPage = (props: OrderPageProps) => {
         </div>
         <div className={classes.bagInf}>
           <div className={classes.text}>
-            <p className={classes.count}>Your Items({props.orders.length})</p>
+            <p className={classes.count}>Your Items({orders.length})</p>
             <p>Total Cost: {allAllCost.toFixed(2)}$</p>
           </div>
           <div className={classes.allTheAlb}>
-            {props.orders.map((item) => {
+            {orders.map((item) => {
               return (
                 <div className={classes.cont}>
                   <div className={classes.up}>
@@ -638,10 +642,10 @@ const OrderPage = (props: OrderPageProps) => {
       <div className={classes.related}>
         <h2 className={classes.text}>Related Products</h2>
         <AlbumSmallAdd
-          genre1={props.orders[0].genres.genre1}
-          genre2={props.orders[0].genres.genre2}
-          genre3={props.orders[0].genres.genre3}
-          name={props.orders[0].name}
+          genre1={orders[0].genres.genre1}
+          genre2={orders[0].genres.genre2}
+          genre3={orders[0].genres.genre3}
+          name={orders[0].name}
         />
       </div>
     </>

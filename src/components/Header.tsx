@@ -11,42 +11,47 @@ import { useState } from "react";
 import Order from "./Order";
 import bagImg from "./../images/other/bagbag.svg";
 import { AlbumItem } from "./Albums";
+import { useSelector } from "react-redux";
+import { RootState } from "./../store/index";
 
-const showOrders = (props: HeaderProps) => {
-  let summa = 0;
-  props.orders.forEach(
-    (el: AlbumItem) => (summa += Number.parseFloat(el.price))
-  );
 
-  return (
-    <>
-      <div className={classes.myorders}>
-        <div className={classes.myorders2}>
-          {props.orders.map((el: AlbumItem) => (
-            <Order onDelete={props.onDelete} key={el.id} item={el} />
-          ))}
-        </div>
-      </div>
-      <p className={classes.summa}>Total cost: {summa.toFixed(2)}$</p>
-    </>
-  );
-};
 
-const showNothing = () => {
-  return (
-    <div className={classes.empty}>
-      <h2>There aren't any products</h2>
-    </div>
-  );
-};
+// interface HeaderProps {
+//   // orders: AlbumItem[];
+//   onDelete: (id: number) => void;
+// }
 
-interface HeaderProps {
-  orders: AlbumItem[];
-  onDelete: (id: number) => void;
-}
-
-const Header = (props: HeaderProps) => {
+const Header = () => {
   let [cartOpen, setCartOpen] = useState(false);
+  let orders = useSelector((state : RootState) => state.orders.orders);
+
+  const showOrders = () => {
+    let summa = 0;
+    orders.forEach(
+      (el: AlbumItem) => (summa += Number.parseFloat(el.price))
+    );
+  
+    return (
+      <>
+        <div className={classes.myorders}>
+          <div className={classes.myorders2}>
+            {orders.map((el: AlbumItem) => (
+              <Order key={el.id} item={el} />
+            ))}
+          </div>
+        </div>
+        <p className={classes.summa}>Total cost: {summa.toFixed(2)}$</p>
+      </>
+    );
+  };
+  
+  const showNothing = () => {
+    return (
+      <div className={classes.empty}>
+        <h2>There aren't any products</h2>
+      </div>
+    );
+  };
 
   return (
     <div className={classes.befNav}>
@@ -87,15 +92,15 @@ const Header = (props: HeaderProps) => {
             {/*если cartOpen true */}{" "}
             {cartOpen && (
               <div className={classes.shopCart}>
-                {props.orders.length > 0 ? showOrders(props) : showNothing()}
+                {orders.length > 0 ? showOrders() : showNothing()}
               </div>
             )}
-            {props.orders.length > 0 && (
+            {orders.length > 0 && (
               <div
                 className={classes.counterOrd}
                 onClick={() => setCartOpen((cartOpen = !cartOpen))}
               >
-                {props.orders.length}
+                {orders.length}
               </div>
             )}
           </div>

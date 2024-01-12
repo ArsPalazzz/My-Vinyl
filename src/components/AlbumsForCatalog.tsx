@@ -3,13 +3,17 @@ import classes from "./../sassModules/AlbumsForCatalog.module.scss";
 import { MdAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { AlbumItem } from "./Albums";
+import { useDispatch } from "react-redux";
+import {addToCard} from './../store/OrderSlice'
 
 interface AlbumsForCatalogProps {
-  onAdd: (id: AlbumItem) => void;
   albums: AlbumItem[];
 }
 
 const AlbumsForCatalog = (props: AlbumsForCatalogProps) => {
+  const dispatch = useDispatch()
+
+
   return (
     <div className={classes.albums}>
       {props.albums.length !== 0 ? (
@@ -22,7 +26,7 @@ const AlbumsForCatalog = (props: AlbumsForCatalogProps) => {
             </Link>
             <MdAddCircle
               className={classes.add}
-              onClick={() => props.onAdd(item)}
+              onClick={() => dispatch(addToCard(item))}
             />
 
             <div className={classes.second}>

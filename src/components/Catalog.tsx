@@ -11,15 +11,13 @@ import ReactPaginate from "react-paginate";
 import AlbumsForCatalog from "./AlbumsForCatalog";
 import Albums, { AlbumItem } from "./Albums";
 
-interface CatalogProps {
-  onAdd: (id: AlbumItem) => void;
-}
+
 
 interface PaginationTypes {
   selected: number;
 }
 
-const Catalog = (props: CatalogProps) => {
+const Catalog = () => {
   const priceArr = Albums.map((el) => Number(el.price.slice(0, -1)));
   const yearArr = Albums.map((el) => Number(el.year));
 
@@ -300,7 +298,7 @@ const Catalog = (props: CatalogProps) => {
             </div>
           </div>
 
-          <AlbumsForCatalog onAdd={props.onAdd} albums={showedAlbums} />
+          <AlbumsForCatalog albums={showedAlbums} />
 
           <ReactPaginate
             prevPageRel={"Previous"}
